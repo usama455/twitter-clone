@@ -1,0 +1,14 @@
+{
+  "name": "twitter-clone-be",
+  "version": "1.0.0",
+  "description": "a twitter clone backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammad Usama",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^7.4.2"
+  }
+}
