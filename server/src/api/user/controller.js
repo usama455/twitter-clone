@@ -197,7 +197,7 @@ export const userProfile = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.findOne({});
+    const users = await User.find({});
     if (users) {
       return successResponse(res, users)
     }
