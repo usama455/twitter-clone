@@ -4,13 +4,11 @@ import { sign } from "../../services/jwt";
 
 const UserSchema = new Schema(
   {
-    firstName: {
+    userName: {
       type: String,
       required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
+      unique: [true, "User Name already exists."],
+
     },
     email: {
       type: String,

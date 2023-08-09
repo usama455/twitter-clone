@@ -24,8 +24,7 @@ export const passportValidation = (req, res, next) => {
 };
 
 export const signUpVlidations = [
-  body("firstName").isLength({ min: 3, max: 255 }),
-  body("lastName").isLength({ min: 3, max: 255 }),
+  body("userName").isLength({ min: 3, max: 255 }),
   body("email").isEmail(),
   body("email").isLength({ max: 255 }),
   body("password").isLength({ min: 5, max: 30 }),
@@ -34,7 +33,7 @@ export const signUpVlidations = [
 export const forgetPasswordValidations = [body("email").isEmail()];
 export const resetPasswordValidations = [
   body("resetPasswordToken"),
-  body("password").isLength({ min: 8, max: 50 }),
+  body("password").isLength({ min: 5, max: 50 }),
 ];
 
 export const userInfoValidation = [

@@ -8,8 +8,8 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
 export const initializePassport = async (passport) => {
-  const authenticateUser = async (email, password, done) => {
-    const user = await User.findOne({ email });
+  const authenticateUser = async (userName, password, done) => {
+    const user = await User.findOne({ userName });
     if (!user) {
       return done(null, false, {
         status: responseStatus.unAuthorized,
@@ -31,7 +31,7 @@ export const initializePassport = async (passport) => {
   passport.use(
     new LocalStrategy(
       {
-        usernameField: "email",
+        usernameField: "userName",
       },
       authenticateUser
     )

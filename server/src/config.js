@@ -21,11 +21,11 @@ if (process.env.NODE_ENV !== "production") {
 const config = {
   all: {
     env: process.env.NODE_ENV || "development",
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8000,
     apiRoot: requireProcessEnv("API_ROOT"),
     masterKey: requireProcessEnv("MASTER_KEY"),
     jwtSecret: requireProcessEnv("JWT_SECRET"),
-    // frontendURL: requireProcessEnv("FRONTEND_URL"),
+    frontendURL: '*',
     nodeMailerHost: process.env.MAILER_HOST,
     nodeMailerPort: process.env.MAILER_PORT,
     nodeMailerUser: process.env.MAILER_USER,

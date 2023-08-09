@@ -15,6 +15,7 @@ const Signin = () => {
         formType,
         hidePassword,
         setHidePassword,
+        handleSignUp,
         handleLogin,
         handleFormTypeChange,
         handleFormValueUpdate
@@ -94,34 +95,34 @@ const Signin = () => {
                     </button>
 
                     <p className="text-center text-xl">Don't have an account?</p>
-                    <button onClick={() => handleFormTypeChange('signup')}>Signup</button>
+                    <button onClick={(e) => handleFormTypeChange(e, 'signup')}>Signup</button>
                 </> :
 
                 <>
                     <h2 className="text-3xl font-bold text-center">Create New Twitter Account</h2>
 
                     <input
-                        // onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => handleFormValueUpdate('userName', e.target.value)}
                         type="text"
                         placeholder="username"
                         className="text-xl py-2 rounded-full px-4"
                     />
                     <input
-                        // onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => handleFormValueUpdate('email', e.target.value)}
                         type="email"
                         placeholder="email"
                         required
                         className="text-xl py-2 rounded-full px-4"
                     />
                     <input
-                        // onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => handleFormValueUpdate('password', e.target.value)}
                         type="password"
                         placeholder="password"
                         className="text-xl py-2 rounded-full px-4"
                     />
 
                     <button
-                        // onClick={handleSignup}
+                        onClick={handleSignUp}
                         className="text-xl py-2 rounded-full px-4 bg-blue-500 text-white"
                         type="submit"
                     >
@@ -130,7 +131,7 @@ const Signin = () => {
 
 
                     <p className="text-center text-xl">Already have an account?</p>
-                    <button onClick={() => handleFormTypeChange('login')}>Login</button>
+                    <button onClick={(e) => handleFormTypeChange(e, 'login')}>Login</button>
                 </>
 
             }

@@ -1,5 +1,5 @@
 import './App.css';
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 
 import "./App.css";
 import Home from './pages/Home/Home';
@@ -11,12 +11,20 @@ import Error from "./pages/Error/Error";
 import React from 'react';
 
 const Layout = () => {
-  return (
-    <div className="md:w-8/12 mx-auto">
-      <Navbar />
-      <Outlet></Outlet>
-    </div>
-  );
+
+  const isAuthenticatedUser = localStorage.getItem('token')
+  if (isAuthenticatedUser) {
+    console.log("isAuthenticationUSer", isAuthenticatedUser)
+    return (
+      <div className="md:w-8/12 mx-auto">
+        <Navbar />
+        <Outlet></Outlet>
+      </div>
+    );
+  } else {
+    return <Navigate to="/signin" replace />
+  }
+
 };
 
 
@@ -38,15 +46,12 @@ const router = createBrowserRouter([
         path: "/explore",
         element: <Explore />,
       },
-      {
-        path: "/signin",
-        element: <Signin />,
-      },
-      {
-        path: "/signout",
-        element: <Signin />,
-      },
+
     ],
+  },
+  {
+    path: "/signin",
+    element: <Signin />,
   },
 ]);
 

@@ -25,13 +25,12 @@ export const checkUserExists = async (req, res, next) => {
 
 export const signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
-    const newUser = new User({ firstName, lastName, email, password });
+    const { userName, email, password } = req.body;
+    const newUser = new User({ userName, email, password });
     const userData = await newUser.save();
     const responseObject = {
       id: userData.id,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
+      userName: userData.userName,
       email: userData.email,
       followers: userData.followers,
       following: userData.following,
@@ -151,8 +150,7 @@ export const resetPassword = async (req, res) => {
     await userData.save();
     const responseObject = {
       id: userData.id,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
+      userName: userData.userName,
       email: userData.email,
       createdAt: userData?.createdAt,
       updatedAt: userData?.updatedAt,
@@ -180,8 +178,7 @@ export const userProfile = async (req, res) => {
     }
     const responseObject = {
       id: userData.id,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
+      userName: userData.userName,
       email: userData.email,
       followers: userData.followers,
       following: userData.following,
@@ -247,7 +244,7 @@ export const updateFollowStatus = async (req, res) => {
 
     await currentUser.save();
 
-    const successMessage = isFollowing ? `Successfully unfollowed ${followingUser.firstName} ${followingUser.lastName}` : `Successfully followed ${followingUser.firstName} ${followingUser.lastName}`;
+    const successMessage = isFollowing ? `Successfully unfollowed ${followingUser.userName}` : `Successfully followed ${followingUser.userName} `;
 
     return successResponse(res, successMessage)
 
