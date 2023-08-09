@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { UserService } from "../../services/users"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 // import { loginStart,  } from "../../redux/userSlice"
 import { loginStart, loginSuccess, loginFailed } from "../../redux/userSlice";
@@ -19,9 +19,9 @@ export const SigninHook = () => {
         email: null
     })
     const [hidePassword, setHidePassword] = useState<boolean>(true)
-
+    const location = useLocation().pathname;
     useEffect(() => {
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem("token") && location === '/signin') {
             navigate("/")
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +51,7 @@ export const SigninHook = () => {
             const response = await UserService.loginUser({ userName: formValues.userName, password: formValues.password })
             if (response && response.data?.data?.token) {
                 localStorage.setItem('token', response.data.data.token)
-                console.log("NAVIGATING")
+                localStorage.setItem('currentId', response.data.data._id)
                 dispatch(loginSuccess(response.data.data))
                 navigate('/')
             }
@@ -81,6 +81,7 @@ export const SigninHook = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token")
+        localStorage.removeItem("currentId")
         window.location.reload()
     }
     return {

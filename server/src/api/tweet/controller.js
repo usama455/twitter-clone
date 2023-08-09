@@ -98,7 +98,7 @@ export const userTweetsAndRetweets = async (req, res) => {
             $or: [{ author: userId }, { retweets: userId }],
         })
             .sort({ createdAt: -1 }) // Sort in descending order (newest first)
-            .populate("author").populate("retweets").populate("likes");
+            .populate("author");
 
         const responseObject = {
             tweets: userTweetsAndRetweets
@@ -129,9 +129,7 @@ export const getFeedTweetsAndRetweets = async (req, res) => {
             ],
         })
             .sort({ createdAt: -1 }) // Sort in descending order (newest first)
-            .populate("author")
-            .populate("retweets")
-            .populate("likes");
+            .populate("author");
         const responseObject = {
             tweets: feedTweetsAndRetweets
         }

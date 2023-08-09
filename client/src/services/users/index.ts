@@ -31,5 +31,23 @@ export const UserService = {
         } catch (err) {
             console.log("err", err)
         }
+    },
+    getUserInfo: async (id: string) => {
+        try {
+            return await req.get(`/user/profile/:${id}`);
+        } catch (err) {
+            console.log("err", err)
+        }
+    },
+    getAllUsers: async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+            return await req.get(`/user`, config);
+        } catch (err) {
+            console.log("err", err)
+        }
     }
 }

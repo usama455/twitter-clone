@@ -14,7 +14,7 @@ const Layout = () => {
 
   const isAuthenticatedUser = localStorage.getItem('token')
   if (isAuthenticatedUser) {
-    console.log("isAuthenticationUSer", isAuthenticatedUser)
+
     return (
       <div className="md:w-8/12 mx-auto">
         <Navbar />

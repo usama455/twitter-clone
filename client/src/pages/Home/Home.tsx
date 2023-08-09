@@ -1,14 +1,11 @@
-import React from "react"; 
+import React from "react";
 import LeftSidebar from "../../components/LeftSideBar/LeftSideBar";
 import RightSidebar from "../../components/RightSideBar/RightSideBar";
 import MainFeed from "../../components/MainFeed/MainFeed";
 
- const Home = () => {
-return (
+const Home = () => {
+  return (
     <>
-    {/* {!currentUser ? (
-      <Signin />
-    ) : ( */}
       <div className="grid grid-cols-1 md:grid-cols-4">
         <div className="px-6">
           <LeftSidebar />
@@ -20,9 +17,9 @@ return (
           <RightSidebar />
         </div>
       </div>
-    {/* )} */}
-  </>
-)
+      {/* )} */}
+    </>
+  )
 }
 
 export default Home
