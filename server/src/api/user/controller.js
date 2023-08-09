@@ -33,6 +33,8 @@ export const signup = async (req, res) => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
+      followers: userData.followers,
+      following: userData.following,
       createdAt: userData?.createdAt,
       updatedAt: userData?.updatedAt,
     };
@@ -167,3 +169,90 @@ export const resetPassword = async (req, res) => {
     return errorResponse(res, err.message);
   }
 };
+
+export const userProfile = async (req, res) => {
+  try {
+    const userId = req.params.id
+    const userData = await User.findById(userId);
+
+    if (!userData) {
+      return errorResponse(res, "User not found", responseStatus.notFound);
+    }
+    const responseObject = {
+      id: userData.id,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      followers: userData.followers,
+      following: userData.following,
+    }
+    return successResponse(res, responseObject)
+
+
+  } catch (err) {
+    logger.error(err.message);
+    return errorResponse(res, err.message);
+  }
+}
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findOne({});
+    if (users) {
+      return successResponse(res, users)
+    }
+  } catch (err) {
+    logger.error(err.message);
+    return errorResponse(res, err.message);
+  }
+}
+
+export const updateFollowStatus = async (req, res) => {
+  try {
+    const userId = req.user._id.toString()
+    const followingId = req.params.id
+
+    if (userId === followingId) {
+      return errorResponse(res, "You cannot follow yourself", responseStatus.conflict)
+    }
+
+    const followingUser = await User.findById(followingId);
+
+    if (!followingUser) {
+      return errorResponse(res, "User not found", responseStatus.notFound);
+    }
+
+    const isFollowing = followingUser.followers.includes(userId);
+
+    if (isFollowing) {
+      // Already following, unfollow
+      followingUser.followers.pull(userId);
+    } else {
+      // Not following, follow
+      followingUser.followers.push(userId);
+    }
+    await followingUser.save();
+
+    // Update the following array of the user making the request
+    const currentUser = await User.findById(userId);
+    const isCurrentUserFollowing = currentUser.following.includes(followingId);
+
+    if (isCurrentUserFollowing) {
+      // Already following, unfollow
+      currentUser.following.pull(followingId);
+    } else {
+      // Not following, follow
+      currentUser.following.push(followingId);
+    }
+
+    await currentUser.save();
+
+    const successMessage = isFollowing ? `Successfully unfollowed ${followingUser.firstName} ${followingUser.lastName}` : `Successfully followed ${followingUser.firstName} ${followingUser.lastName}`;
+
+    return successResponse(res, successMessage)
+
+  } catch (err) {
+    logger.error(err.message);
+    return errorResponse(res, err.message);
+  }
+}

@@ -2,17 +2,21 @@ import { Router } from "express";
 import {
   login,
   signup,
+  getAllUsers,
   forgetPassword,
   checkUserExists,
   resetPassword,
+  userProfile,
+  updateFollowStatus
 } from "./controller";
 import {
   forgetPasswordValidations,
   passportValidation,
   resetPasswordValidations,
   signUpVlidations,
+  userInfoValidation,
 } from "./middleware";
-import { dataValidator } from "../../utils";
+import { dataValidator, tokenValidator } from "../../utils";
 
 const router = new Router();
 
@@ -36,5 +40,10 @@ router.post(
   dataValidator,
   resetPassword
 );
+
+router.get('/', tokenValidator, getAllUsers);
+router.get("/profile/:id", tokenValidator, userInfoValidation, userProfile)
+
+router.post("/update-follow/:id", tokenValidator, userInfoValidation, updateFollowStatus)
 
 export default router;

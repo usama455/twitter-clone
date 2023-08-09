@@ -1,5 +1,5 @@
 // import User from "./model";
-import { body, validationResult } from "express-validator";
+import { body, param, validationResult } from "express-validator";
 import {
   errorResponse,
   responseError,
@@ -18,7 +18,7 @@ export const passportValidation = (req, res, next) => {
         return next(err);
       }
       next();
-    })(req, res, next);
+    });
     next();
   })(req, res, next);
 };
@@ -35,4 +35,8 @@ export const forgetPasswordValidations = [body("email").isEmail()];
 export const resetPasswordValidations = [
   body("resetPasswordToken"),
   body("password").isLength({ min: 8, max: 50 }),
+];
+
+export const userInfoValidation = [
+  param("id").isMongoId().withMessage("Invalid user ID format"),
 ];
