@@ -2,13 +2,49 @@
   "name": "twitter-clone-be",
   "version": "1.0.0",
   "description": "a twitter clone backend",
-  "main": "index.js",
+  "main": "src",
   "scripts": {
+    "start": "node .",
+    "dev": "nodemon -i \"*.test.js\" .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Muhammad Usama",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^7.4.2"
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-proposal-export-default-from": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/register": "^7.15.3",
+    "@babel/runtime": "^7.15.4",
+    "bcrypt": "^5.1.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-force-ssl": "^0.3.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "nodemailer": "^6.9.1",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.1.0",
+    "cross-env": "^7.0.2",
+    "dotenv-safe": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^2.0.2",
+    "open-cli": "^7.2.0"
   }
 }

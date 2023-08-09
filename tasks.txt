@@ -1,8 +1,9 @@
 Task Breakdown
 1 - Basic Projects Setup Frontend/Backend-  1 hour
 2 - User Schema Design - Backend - 1 hour
-3 - Tweet Schema Design - Backend - 1 hour
-4 - User Authentication and Profile Apis - Backend - 4 hours
+3 - User Authentication - Backend - 3 hours
+4 - User Apis - Get User, Follow User, Get Followers , Following - 3 hours
+4 - Tweet Schema Design - Backend - 1 hour
 5 - Tweet Apis - Backend - 5 hours
 6 - Login / Signup Page - FrontEnd - 3 hours 
 7 - ProfilePage - User Info, Follow Users - Frontend  -  5 hours
