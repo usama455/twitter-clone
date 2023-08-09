@@ -7,12 +7,14 @@ export const sign = ({ email, _id, expiryTime = expiresIn }) => {
   expirationDate = new Date(
     today.getTime() + parseInt(expiryTime, 10) * 60 * 1000
   );
-  return jwt.sign(
-    {
-      email,
-      _id,
-      exp: parseInt(expirationDate.getTime() / 1000, 10),
-    },
-    jwtSecret
-  );
+  return {
+    token: jwt.sign(
+      {
+        email,
+        _id,
+        exp: parseInt(expirationDate.getTime() / 1000, 10),
+      },
+      jwtSecret
+    ), _id: _id
+  };
 };

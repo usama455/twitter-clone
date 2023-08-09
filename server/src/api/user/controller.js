@@ -51,9 +51,10 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const token = sign(req.user.toJSON());
+    const { token, _id } = sign(req.user.toJSON());
     const responseObject = {
-      email: req.user.email,
+      _id: _id,
+      userName: req.user.userName,
       token,
     };
     return successResponse(res, responseObject);
