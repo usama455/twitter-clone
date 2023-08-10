@@ -65,6 +65,8 @@ The client will run on port 3000, and the server will run on port 8000. Make sur
 - Add a comments feature to allow users to comment on tweets and engage in discussions.
 - Introduce the ability to quote tweets, allowing users to share and comment on others' tweets.
 - Enhance user authentication and security measures.
+- Forget and reset password implementation on frontend
+- Email verification based on Nodemailer
 - Improve the user interface and overall user experience.
 - Implement responsive design to ensure a seamless experience on different devices.
 - Explore additional features such as user mentions, hashtags, and trending topics.
