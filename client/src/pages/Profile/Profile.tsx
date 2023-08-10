@@ -76,7 +76,7 @@ const Profile = () => {
                 userTweets.map((tweet) => {
                   return (
                     <div className="p-2" key={tweet._id}>
-                      <Tweet tweet={tweet} setData={setUserTweets} />
+                      <Tweet tweet={tweet} setTimeLine={setUserTweets} userId={userProfile.id} currentPage={currentPage} />
                     </div>
                   );
                 })}

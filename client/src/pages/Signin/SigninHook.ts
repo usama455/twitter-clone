@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { UserService } from "../../services/users"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
@@ -10,13 +10,19 @@ export const SigninHook = () => {
     const dispatch = useDispatch()
     const [formType, setFormType] = useState<String>("login")
     const [formValues, setFormValues] = useState<{
-        userName: String | null,
-        password: String | null,
-        email: String | null,
+        userName: string,
+        password: string,
+        email: string,
     }>({
-        userName: null,
-        password: null,
-        email: null
+        userName: '',
+        password: '',
+        email: ''
+    })
+    const [error, setError] = useState({
+        userName: "",
+        password: "",
+        email: "",
+        login: ""
     })
     const [hidePassword, setHidePassword] = useState<boolean>(true)
     const location = useLocation().pathname;
@@ -27,14 +33,46 @@ export const SigninHook = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const validatePssword = useMemo(() => {
+        if (formValues.password && formValues.password.length < 5) {
+            setError(prev => ({
+                ...prev,
+                password: "Password must be greater than 5 characters"
+            }))
+            return false
+        }
+        setError(prev => ({
+            ...prev,
+            password: "",
+        }));
+        return true
+    }, [formValues.password])
+
+    const validateEmail = useMemo(() => {
+        if (formType === "signup" && formValues.email && !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(formValues.email)) {
+            setError(prev => ({
+                ...prev,
+                email: "Invalid email format"
+            }));
+            return false;
+        }
+        setError(prev => ({
+            ...prev,
+            email: "",
+        }));
+        return true;
+    }, [formType, formValues.email]);
+
+
     const handleFormTypeChange = useCallback((e: any, type: String) => {
         e.preventDefault();
         setFormType(type)
-        setFormValues({
-            userName: null,
-            password: null,
-            email: null
-        })
+        setFormValues(prevValues => ({
+            ...prevValues,
+            userName: '',
+            password: '',
+            email: ''
+        }))
     }, [])
 
     const handleFormValueUpdate = useCallback((key: any, value: String) => {
@@ -47,34 +85,50 @@ export const SigninHook = () => {
     const handleLogin = useCallback(async (e: any) => {
         try {
             e.preventDefault();
-            dispatch(loginStart())
-            const response = await UserService.loginUser({ userName: formValues.userName, password: formValues.password })
-            if (response && response.data?.data?.token) {
-                localStorage.setItem('token', response.data.data.token)
-                localStorage.setItem('currentId', response.data.data._id)
-                dispatch(loginSuccess(response.data.data))
-                navigate('/')
+            if (validatePssword) {
+                dispatch(loginStart())
+                const response = await UserService.loginUser({ userName: formValues.userName, password: formValues.password })
+                if (response && response.data?.data?.token) {
+                    localStorage.setItem('token', response.data.data.token)
+                    localStorage.setItem('currentId', response.data.data._id)
+                    dispatch(loginSuccess(response.data.data))
+                    navigate('/')
+                } else {
+                    console.log("ERROR")
+                }
             }
         } catch (err) {
-            dispatch(loginFailed())
-            console.log("Err", err)
-
+            if (err.response && err.response.status === 401) {
+                console.log("Unauthorized: Invalid credentials")
+                alert("Invalid credentials. Please check your username and password.")
+            } else {
+                console.log("An error occurred:", err)
+                alert("An error occurred. Please try again later.")
+                dispatch(loginFailed())
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formValues])
+
     const handleSignUp = useCallback(async (e: any) => {
         try {
             e.preventDefault();
-            dispatch(loginStart())
-            const response = await UserService.signupUser({ userName: formValues.userName, password: formValues.password, email: formValues.email })
-            if (response && response.data) {
-                handleLogin(e)
+            if (validatePssword && validateEmail) {
+                dispatch(loginStart())
+                const response = await UserService.signupUser({ userName: formValues.userName, password: formValues.password, email: formValues.email })
+                if (response && response.data) {
+                    handleLogin(e)
+                }
             }
         } catch (err) {
-            dispatch(loginFailed())
-
-            console.log("Err", err)
-
+            if (err.response && err.response.status === 400) {
+                console.log("Unauthorized: Invalid credentials")
+                alert("Invalid credentials.")
+            } else {
+                console.log("An error occurred:", err)
+                alert("Something went wrong.")
+                dispatch(loginFailed())
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formValues])
@@ -89,6 +143,8 @@ export const SigninHook = () => {
         formType,
         formValues,
         hidePassword,
+        error,
+        setError,
         handleLogout,
         handleSignUp,
         setHidePassword,

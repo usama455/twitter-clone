@@ -2,7 +2,7 @@ import { useCallback, useState } from "react"
 import { TweetService } from "../../services/tweets"
 import { useLocation } from "react-router-dom";
 
-export const TweetHook = (setTimeLine: any) => {
+export const TweetHook = (setTimeLine: any, userId: any | null = null, currentPage: number | string = 1) => {
     const [loading, setLoading] = useState<{
         like: boolean;
         retweet: boolean;
@@ -25,7 +25,9 @@ export const TweetHook = (setTimeLine: any) => {
 
 
                 if (location.includes("profile")) {
-                    window.location.reload();
+                    const updatedData = await TweetService.getUserSpecificTweets(userId, currentPage);
+                    setTimeLine(updatedData.data.data.tweets)
+                    // window.location.reload();
                 } else {
                     const updatedData = await TweetService.getTimelineTweets();
                     setTimeLine(updatedData.data.data.tweets)
@@ -41,7 +43,7 @@ export const TweetHook = (setTimeLine: any) => {
             console.log("err", err)
         }
 
-    }, [location, setTimeLine])
+    }, [currentPage, location, setTimeLine, userId])
 
     const handleUpdateRetweetStatus = useCallback(async (id: string) => {
         try {
@@ -53,7 +55,9 @@ export const TweetHook = (setTimeLine: any) => {
 
             if (res.status === 200) {
                 if (location.includes("profile")) {
-                    window.location.reload();
+                    const updatedData = await TweetService.getUserSpecificTweets(userId, currentPage);
+                    setTimeLine(updatedData.data.data.tweets)
+                    // window.location.reload();
                 } else {
                     const updatedData = await TweetService.getTimelineTweets();
                     setTimeLine(updatedData.data.data.tweets)
@@ -67,13 +71,14 @@ export const TweetHook = (setTimeLine: any) => {
             console.log("err", err)
         }
 
-    }, [location, setTimeLine])
+    }, [currentPage, location, setTimeLine, userId])
 
     const handleDeleteTweet = useCallback(async (id: string) => {
         try {
             const res = await TweetService.deleteTweet(id)
             if (res.status === 200) {
                 if (location.includes("profile")) {
+
                     window.location.reload();
                 } else {
                     const updatedData = await TweetService.getTimelineTweets();

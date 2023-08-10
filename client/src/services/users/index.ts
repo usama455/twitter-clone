@@ -4,33 +4,27 @@ const req = axios.create({
 });
 export const UserService = {
     loginUser: async (data: any) => {
-        try {
-            const { userName, password } = data;
 
-            const requestBody = {
-                userName: userName,
-                password: password
-            }
-            return await req.post("/user/login", requestBody);
+        const { userName, password } = data;
 
-        } catch (err) {
-            console.log("err", err)
+        const requestBody = {
+            userName: userName,
+            password: password
         }
+        return await req.post("/user/login", requestBody);
+
     },
     signupUser: async (data: any) => {
-        try {
-            const { userName, password, email } = data;
 
-            const requestBody = {
-                userName: userName,
-                password: password,
-                email: email
-            }
-            return await req.post("/user/register", requestBody);
+        const { userName, password, email } = data;
 
-        } catch (err) {
-            console.log("err", err)
+        const requestBody = {
+            userName: userName,
+            password: password,
+            email: email
         }
+        return await req.post("/user/register", requestBody);
+
     },
     getUserInfo: async (id: string) => {
         try {

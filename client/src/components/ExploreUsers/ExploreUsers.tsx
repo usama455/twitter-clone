@@ -1,10 +1,11 @@
 import React from "react";
 import { ExploreUsersHook } from "./ExploreUsersHook";
 import { Link } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const ExploreUsers = () => {
-  const { users, currentUserProfile, handleFollow } = ExploreUsersHook()
+  const { users, loading, currentUserProfile, handleFollow } = ExploreUsersHook()
   return (
     <div className="mt-6">
       {users &&
@@ -17,23 +18,31 @@ const ExploreUsers = () => {
                   <h3 className="font-bold">{user.userName}</h3>
                   <span className="mt-1">@{user.userName}</span>
                 </Link>
-                {currentUserProfile.following.includes(user._id) ? (
-                  <button
-                    className="px-4 -y-2 bg-blue-500 rounded-full text-white"
-                    onClick={() => handleFollow(user._id)}
-                  >
-                    Following
-                  </button>
-                ) : (
-                  <button
-                    className="px-4 -y-2 bg-blue-500 rounded-full text-white"
-                    onClick={() => handleFollow(user._id)}
-                  >
-                    Follow
-                  </button>
-                )}
+                {loading === user._id ? <CircularProgress size={20} />
+                  :
+
+                  currentUserProfile.following.includes(user._id) ? (
+                    <button
+                      className="px-4 -y-2 bg-blue-500 rounded-full text-white"
+                      onClick={() => handleFollow(user._id)}
+                    >
+                      Following
+                    </button>
+                  ) : (
+                    <button
+                      className="px-4 -y-2 bg-blue-500 rounded-full text-white"
+                      onClick={() => handleFollow(user._id)}
+                    >
+                      Follow
+                    </button>
+                  )
+                }
+
               </div>
+              <hr className="my-4 border-gray-300" />
+
             </div>
+
           );
         })}
     </div>

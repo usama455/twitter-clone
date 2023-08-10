@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export const ExploreUsersHook = () => {
     const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(null)
     const [currentUserProfile, setCurrentUserProfile] = useState(null)
 
     const { currentUser } = useSelector((state: any) => state.user);
@@ -27,16 +28,21 @@ export const ExploreUsersHook = () => {
     const handleFollow = useCallback(
         async (userId: string) => {
             try {
+                setLoading(userId)
                 await UserService.updateFollowUser(userId)
-                window.location.reload();
+                const currentUserProfileDetails = await UserService.getUserInfo(currentUser._id)
+                setCurrentUserProfile(currentUserProfileDetails.data.data)
+                setLoading(null)
             } catch (err) {
                 console.log("error", err);
             }
         }
 
-        , [])
+        , [currentUser._id])
     return {
         users,
+        loading,
+        setLoading,
         currentUserProfile,
         handleFollow
     }

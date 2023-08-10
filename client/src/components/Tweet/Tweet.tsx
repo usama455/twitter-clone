@@ -9,13 +9,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { TweetHook } from "./TweetHook";
 
 const Tweet = (data: any) => {
-    const { tweet, setTimeLine } = data;
+    const { tweet, setTimeLine, userId = null, currentPage = 1 } = data;
     const { currentUser } = useSelector((state: any) => state.user);
     const {
         loading,
         handleUpdateLikeStatus,
         handleUpdateRetweetStatus,
-        handleDeleteTweet } = TweetHook(setTimeLine)
+        handleDeleteTweet } = TweetHook(setTimeLine, userId, currentPage)
     return (
         <div>
             {tweet && (

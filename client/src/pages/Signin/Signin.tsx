@@ -6,8 +6,10 @@ import { SigninHook } from "./SigninHook";
 
 const Signin = () => {
     const {
+        formValues,
         formType,
         hidePassword,
+        error,
         setHidePassword,
         handleSignUp,
         handleLogin,
@@ -23,15 +25,19 @@ const Signin = () => {
                     <input
                         onChange={(e) => handleFormValueUpdate('userName', e.target.value)}
                         type="text"
+                        value={formValues.userName}
                         placeholder="username"
                         className="text-xl py-2 rounded-full px-4"
                     />
                     <input
                         onChange={(e) => handleFormValueUpdate('password', e.target.value)}
                         type={hidePassword ? 'password' : 'text'}
+                        value={formValues.password}
                         placeholder="password"
                         className="text-xl py-2 rounded-full px-4"
                     />
+                    {error.password && error.password !== "" && <p className="text-red-500 text-sm mt-1">Password must be at least 5 characters long</p>
+                    }
                     {/* Toggle password visibility */}
                     <div
                         className="icon_button absolute right-[45px] top-[215px]"
@@ -63,23 +69,29 @@ const Signin = () => {
                     <input
                         onChange={(e) => handleFormValueUpdate('userName', e.target.value)}
                         type="text"
+                        value={formValues.userName}
                         placeholder="username"
                         className="text-xl py-2 rounded-full px-4"
                     />
                     <input
                         onChange={(e) => handleFormValueUpdate('email', e.target.value)}
                         type="email"
+                        value={formValues.email}
                         placeholder="email"
                         required
                         className="text-xl py-2 rounded-full px-4"
                     />
+                    {error.email && error.email !== "" && <p className="text-red-500 text-sm mt-1">Invalid email address</p>
+                    }
                     <input
                         onChange={(e) => handleFormValueUpdate('password', e.target.value)}
                         type="password"
+                        value={formValues.password}
                         placeholder="password"
                         className="text-xl py-2 rounded-full px-4"
                     />
-
+                    {error.password && error.password !== "" && <p className="text-red-500 text-sm mt-1">Password must be at least 5 characters long</p>
+                    }
                     <button
                         onClick={handleSignUp}
                         className="text-xl py-2 rounded-full px-4 bg-blue-500 text-white"
