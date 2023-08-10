@@ -29,41 +29,44 @@ const Timeline = () => {
                     );
                 })}
 
-            {totalPages > 1 && <div className="flex justify-center mt-4 space-x-2">
-                {currentPage > 1 && (
-                    <Button
-                        variant="outlined"
-                        size="small"
-                        color="primary"
-                        onClick={() => fetchRequiredPage(currentPage - 1)}
-                    >
-                        Previous
-                    </Button>
-                )}
+            {totalPages > 1 && (
+                <div className="flex justify-center mt-4 my-8 pb-4 space-x-2"> {/* Add pb-4 class here */}
+                    {currentPage > 1 && (
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            color="primary"
+                            onClick={() => fetchRequiredPage(currentPage - 1)}
+                        >
+                            Previous
+                        </Button>
+                    )}
 
-                {Array.from({ length: pageButtonEnd - pageButtonStart + 1 }, (_, index) => pageButtonStart + index).map((page) => (
-                    <Button
-                        key={page}
-                        variant={page === currentPage ? "contained" : "outlined"}
-                        size="small"
-                        color="primary"
-                        onClick={() => fetchRequiredPage(page)}
-                    >
-                        {page}
-                    </Button>
-                ))}
+                    {Array.from({ length: pageButtonEnd - pageButtonStart + 1 }, (_, index) => pageButtonStart + index).map((page) => (
+                        <Button
+                            key={page}
+                            variant={page === currentPage ? "contained" : "outlined"}
+                            size="small"
+                            color="primary"
+                            onClick={() => fetchRequiredPage(page)}
+                        >
+                            {page}
+                        </Button>
+                    ))}
 
-                {currentPage < totalPages && (
-                    <Button
-                        variant="outlined"
-                        size="small"
-                        color="primary"
-                        onClick={() => fetchRequiredPage(currentPage + 1)}
-                    >
-                        Next
-                    </Button>
-                )}
-            </div>}
+                    {currentPage < totalPages && (
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            color="primary"
+                            onClick={() => fetchRequiredPage(currentPage + 1)}
+                        >
+                            Next
+                        </Button>
+                    )}
+                </div>
+            )}
+
         </div>
     );
 };

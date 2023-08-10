@@ -80,7 +80,7 @@ const Profile = () => {
                     </div>
                   );
                 })}
-              {totalPages > 1 && <div className="flex justify-center mt-4 space-x-2">
+              {totalPages > 1 && <div className="flex justify-center mt-4 my-8 pb-4 space-x-2">
                 {currentPage > 1 && (
                   <Button
                     variant="outlined"

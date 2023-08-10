@@ -13,7 +13,7 @@ const MainFeed = () => {
         <textarea
           onChange={(e) => setTweetText(e.target.value)}
           placeholder="What's happening"
-          maxLength={280}
+          maxLength={255}
           className="bg-slate-200 rounded-lg w-full p-2"
         ></textarea>
         <button
