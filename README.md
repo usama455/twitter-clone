@@ -59,6 +59,35 @@ The client will run on port 3000, and the server will run on port 8000. Make sur
 - Tailwind css
 - Material UI
 
+## Specs
+- Login / Signup User
+- Home Page will display tweets and retweets of user and followers
+- Explore People will have a list of all users and follow / unfollow button respectively
+- Profile people will have followers and followed count and tweets and retweets of particular user
+- in Navbar, Right bar is static and could be improved in further development
+- User can post tweets upto 255 characthers
+- User can like, unlike, retweet , undo retweet and delete (if own tweet)
+- User can follow or unfollow any other user
+
+
+
+## Project Screens
+1 - Login 
+<img width="1426" alt="Screenshot 2023-08-10 at 3 46 02 PM" src="https://github.com/usama455/twitter-clone/assets/82389871/d8ea336b-2d0b-4f58-ae25-cd0597f4ed97">
+
+2 - Signup
+<img width="1425" alt="Screenshot 2023-08-10 at 3 46 35 PM" src="https://github.com/usama455/twitter-clone/assets/82389871/436bfbec-d17a-400b-889d-5ef67c4f8622">
+
+3 -  Home page
+<img width="1346" alt="Screenshot 2023-08-10 at 3 47 40 PM" src="https://github.com/usama455/twitter-clone/assets/82389871/f5a02207-8fff-4563-b62d-dc84d59e473e">
+
+
+4 - Explore Users Page
+<img width="1418" alt="Screenshot 2023-08-10 at 3 48 07 PM" src="https://github.com/usama455/twitter-clone/assets/82389871/fe917e53-874a-44af-b81a-3ac54840399e">
+
+5 - Profile Page
+<img width="1283" alt="Screenshot 2023-08-10 at 3 48 41 PM" src="https://github.com/usama455/twitter-clone/assets/82389871/a636041c-8e23-4e66-a823-6c5271d8f404">
+
 ## Potential For Improvement
 
 - Implement real-time updates using WebSockets for instant notifications on likes and retweets.
@@ -73,7 +102,4 @@ The client will run on port 3000, and the server will run on port 8000. Make sur
 - Optimize database queries and performance for scalability.
 - Add unit and integration tests to ensure robust functionality.
 - Provide user settings and customization options.
-
-
-
 
