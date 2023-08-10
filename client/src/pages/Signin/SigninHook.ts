@@ -80,6 +80,7 @@ export const SigninHook = () => {
     }, [formValues])
 
     const handleLogout = () => {
+        dispatch(loginSuccess(null))
         localStorage.removeItem("token")
         localStorage.removeItem("currentId")
         window.location.reload()

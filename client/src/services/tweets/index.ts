@@ -11,6 +11,14 @@ export const TweetService = {
         };
         return await req.get("/tweet/feed", config)
     },
+    getUserSpecificTweets: async (id: string) => {
+
+        const token = localStorage.getItem('token')
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        return await req.get(`/tweet/user/${id}`, config)
+    },
 
     updateLikeStatus: async (id: string) => {
 

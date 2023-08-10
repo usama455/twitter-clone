@@ -34,7 +34,11 @@ export const UserService = {
     },
     getUserInfo: async (id: string) => {
         try {
-            return await req.get(`/user/profile/:${id}`);
+            const token = localStorage.getItem('token')
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+            return await req.get(`/user/profile/${id}`, config);
         } catch (err) {
             console.log("err", err)
         }
@@ -49,5 +53,15 @@ export const UserService = {
         } catch (err) {
             console.log("err", err)
         }
-    }
+    },
+    updateFollowUser: async (id: string) => {
+
+        const token = localStorage.getItem('token')
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        return await req.post(`/user/update-follow/${id}`, null, config)
+    },
 }

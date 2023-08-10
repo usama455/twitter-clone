@@ -91,8 +91,6 @@ export const userTweetsAndRetweets = async (req, res) => {
     try {
         // const userId = req.user._id;
         const userId = req.params.id;
-
-        console.log(userId)
         // Fetch tweets and retweets by the user, sorted by timestamp
         const userTweetsAndRetweets = await Tweet.find({
             $or: [{ author: userId }, { retweets: userId }],

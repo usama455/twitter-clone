@@ -1,19 +1,38 @@
 import React from "react";
 import { ExploreUsersHook } from "./ExploreUsersHook";
+import { Link } from "react-router-dom";
 
 
 const ExploreUsers = () => {
-  const { users } = ExploreUsersHook()
-  console.log(users)
+  const { users, currentUserProfile, handleFollow } = ExploreUsersHook()
   return (
     <div className="mt-6">
-      EXPLORE
       {users &&
         users.map((user: any) => {
           return (
-            <div key={user._id} className="p-2">
-              {user.userName}
-              {/* <Tweet tweet={tweet} setData={setExplore} /> */}
+            user._id !== currentUserProfile.id &&
+            <div className="col-span-2 border-x-2 border-t-slate-800 px-6">
+              <div className="flex justify-between items-center">
+                <Link className="w-12 h-12 flex flex-col items-center justify-center" to={`/profile/${user._id}`}>
+                  <h3 className="font-bold">{user.userName}</h3>
+                  <span className="mt-1">@{user.userName}</span>
+                </Link>
+                {currentUserProfile.following.includes(user._id) ? (
+                  <button
+                    className="px-4 -y-2 bg-blue-500 rounded-full text-white"
+                    onClick={() => handleFollow(user._id)}
+                  >
+                    Following
+                  </button>
+                ) : (
+                  <button
+                    className="px-4 -y-2 bg-blue-500 rounded-full text-white"
+                    onClick={() => handleFollow(user._id)}
+                  >
+                    Follow
+                  </button>
+                )}
+              </div>
             </div>
           );
         })}

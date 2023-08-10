@@ -27,7 +27,6 @@ const LeftSidebar = () => {
           </div>
         </Link>
         <Link to={`/profile/${currentUser._id}`}>
-          {/* <Link to={`/profile/1}`}> */}
           <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">
             <PersonIcon fontSize="large" />
             <p>Profile</p>
@@ -37,9 +36,6 @@ const LeftSidebar = () => {
       <div className="flex justify-between">
         <div>
           <p className="font-bold">@{currentUser.userName}</p>
-
-          {/* <p className="font-bold">username</p>
-            <p className="font-bold">username</p> */}
         </div>
         <div>
           <Link to="signin">

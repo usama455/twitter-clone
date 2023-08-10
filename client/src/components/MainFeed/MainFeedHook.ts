@@ -8,16 +8,10 @@ export const MainFeedHook = () => {
     const { currentUser } = useSelector((state: any) => state.user);
 
     const handleSubmit = async (e: any) => {
-        console.log("HERE?")
         e.preventDefault();
         try {
-            const submitTweet = await TweetService.createTweet(tweetText)
-            console.log(submitTweet)
+            await TweetService.createTweet(tweetText)
 
-            // axios.post("/tweets", {
-            //   userId: currentUser._id,
-            //   description: tweetText,
-            // });
             window.location.reload();
         } catch (err) {
             console.log(err);
