@@ -95,6 +95,7 @@ const Profile = () => {
                 {Array.from({ length: pageButtonEnd - pageButtonStart + 1 }, (_, index) => pageButtonStart + index).map((page) => (
                   <Button
                     key={page}
+                    // eslint-disable-next-line eqeqeq
                     variant={page == currentPage ? "contained" : "outlined"}
                     size="small"
                     color="primary"
