@@ -3,21 +3,21 @@ const req = axios.create({
     baseURL: 'http://localhost:8000/api', // The base URL of your backend server
 });
 export const TweetService = {
-    getTimelineTweets: async () => {
+    getTimelineTweets: async (page: number | string = 1) => {
 
         const token = localStorage.getItem('token')
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        return await req.get("/tweet/feed", config)
+        return await req.get(`/tweet/feed?page=${page}&limit=10`, config)
     },
-    getUserSpecificTweets: async (id: string) => {
+    getUserSpecificTweets: async (id: string, page: number | string = 1) => {
 
         const token = localStorage.getItem('token')
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        return await req.get(`/tweet/user/${id}`, config)
+        return await req.get(`/tweet/user/${id}?page=${page}&limit=10`, config)
     },
 
     updateLikeStatus: async (id: string) => {

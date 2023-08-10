@@ -5,6 +5,7 @@ import RightSidebar from "../../components/RightSideBar/RightSideBar";
 import { useParams } from "react-router-dom";
 import { ProfileHook } from "./ProfileHook";
 import Tweet from "../../components/Tweet/Tweet";
+import Button from '@mui/material/Button';
 
 const Profile = () => {
 
@@ -14,8 +15,15 @@ const Profile = () => {
     currentUserProfile,
     userTweets,
     userProfile,
+    currentPage,
+    totalPages,
     setUserTweets,
-    handleFollow } = ProfileHook(id)
+    handleFollow,
+    fetchRequiredPage
+  } = ProfileHook(id)
+  const pageButtonsToShow = 5;
+  const pageButtonStart = Math.max(1, currentPage - Math.floor(pageButtonsToShow / 2));
+  const pageButtonEnd = Math.min(totalPages, pageButtonStart + pageButtonsToShow - 1);
 
   return (
     <>
@@ -72,9 +80,43 @@ const Profile = () => {
                     </div>
                   );
                 })}
+              {totalPages > 1 && <div className="flex justify-center mt-4 space-x-2">
+                {currentPage > 1 && (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="primary"
+                    onClick={() => fetchRequiredPage(currentPage - 1)}
+                  >
+                    Previous
+                  </Button>
+                )}
+
+                {Array.from({ length: pageButtonEnd - pageButtonStart + 1 }, (_, index) => pageButtonStart + index).map((page) => (
+                  <Button
+                    key={page}
+                    variant={page == currentPage ? "contained" : "outlined"}
+                    size="small"
+                    color="primary"
+                    onClick={() => fetchRequiredPage(page)}
+                  >
+                    {page}
+                  </Button>
+                ))}
+
+                {currentPage < totalPages && (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="primary"
+                    onClick={() => fetchRequiredPage(currentPage + 1)}
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>}
             </div>
           </div>
-
           <div className="px-6">
             <RightSidebar />
           </div>

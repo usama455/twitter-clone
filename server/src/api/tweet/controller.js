@@ -89,18 +89,35 @@ export const updateRetweet = async (req, res) => {
 
 export const userTweetsAndRetweets = async (req, res) => {
     try {
-        // const userId = req.user._id;
         const userId = req.params.id;
-        // Fetch tweets and retweets by the user, sorted by timestamp
+        const page = req.query.page || 1; // Get the requested page number from query parameter
+        const limit = 10; // Number of items per page
+
+        // Calculate the skip value to paginate the results
+        const skip = (page - 1) * limit;
+
+        // Fetch tweets and retweets by the user, sorted by timestamp, with pagination
         const userTweetsAndRetweets = await Tweet.find({
             $or: [{ author: userId }, { retweets: userId }],
         })
-            .sort({ createdAt: -1 }) // Sort in descending order (newest first)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
             .populate("author");
 
+        // Count the total number of tweets and retweets by the user
+        const totalTweetsAndRetweets = await Tweet.countDocuments({
+            $or: [{ author: userId }, { retweets: userId }],
+        });
+
+        const totalPages = Math.ceil(totalTweetsAndRetweets / limit);
+
         const responseObject = {
-            tweets: userTweetsAndRetweets
-        }
+            tweets: userTweetsAndRetweets,
+            totalPages: totalPages,
+            currentPage: page,
+        };
+
         return successResponse(res, responseObject, "User's tweets and retweets retrieved successfully");
     } catch (err) {
         logger.error(err.message);
@@ -112,12 +129,17 @@ export const userTweetsAndRetweets = async (req, res) => {
 export const getFeedTweetsAndRetweets = async (req, res) => {
     try {
         const currentUserId = req.user._id; // Get the current user's ID
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10; // Set the limit of tweets per page
 
         // Find the current user's followers
         const currentUser = await User.findById(currentUserId).select("followers");
 
         // Include the current user's ID in the followers list
         const followerIds = [currentUserId, ...currentUser.followers];
+
+        // Calculate the skip value based on the current page and limit
+        const skip = (page - 1) * limit;
 
         // Fetch tweets and retweets by the current user and their followers, sorted by timestamp
         const feedTweetsAndRetweets = await Tweet.find({
@@ -127,16 +149,32 @@ export const getFeedTweetsAndRetweets = async (req, res) => {
             ],
         })
             .sort({ createdAt: -1 }) // Sort in descending order (newest first)
-            .populate("author");
+            .populate("author")
+            .skip(skip) // Skip records based on the current page and limit
+            .limit(limit); // Limit the number of records per page
+
+        const totalTweets = await Tweet.countDocuments({
+            $or: [
+                { author: { $in: followerIds } },
+                { retweets: { $in: followerIds } }
+            ]
+        });
+
+        const totalPages = Math.ceil(totalTweets / limit);
+
         const responseObject = {
-            tweets: feedTweetsAndRetweets
-        }
+            tweets: feedTweetsAndRetweets,
+            currentPage: page,
+            totalPages: totalPages
+        };
+
         return successResponse(res, responseObject, "Feed tweets and retweets retrieved successfully");
     } catch (err) {
         logger.error(err.message);
         return errorResponse(res, err);
     }
 };
+
 
 
 export const deleteTweet = async (req, res) => {
