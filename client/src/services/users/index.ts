@@ -1,6 +1,8 @@
 import axios from "axios";
+const API = process.env.REACT_APP_API_ENDPOINT
+
 const req = axios.create({
-    baseURL: 'http://localhost:8000/api', // The base URL of your backend server
+    baseURL: API, // The base URL of your backend server
 });
 export const UserService = {
     loginUser: async (data: any) => {
