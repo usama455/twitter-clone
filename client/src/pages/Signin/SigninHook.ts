@@ -9,6 +9,7 @@ export const SigninHook = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formType, setFormType] = useState<String>("login")
+    const [loading, setLoading] = useState(false)
     const [formValues, setFormValues] = useState<{
         userName: string,
         password: string,
@@ -84,6 +85,7 @@ export const SigninHook = () => {
 
     const handleLogin = useCallback(async (e: any) => {
         try {
+            setLoading(true)
             e.preventDefault();
             if (validatePssword) {
                 dispatch(loginStart())
@@ -92,12 +94,15 @@ export const SigninHook = () => {
                     localStorage.setItem('token', response.data.data.token)
                     localStorage.setItem('currentId', response.data.data._id)
                     dispatch(loginSuccess(response.data.data))
+                    setLoading(false)
                     navigate('/')
                 } else {
-                    console.log("ERROR")
+                    setLoading(false)
+                    alert("Something went wrong. Try again")
                 }
             }
         } catch (err) {
+            setLoading(false)
             if (err.response && err.response.status === 401) {
                 console.log("Unauthorized: Invalid credentials")
                 alert("Invalid credentials. Please check your username and password.")
@@ -112,6 +117,7 @@ export const SigninHook = () => {
 
     const handleSignUp = useCallback(async (e: any) => {
         try {
+            setLoading(true)
             e.preventDefault();
             if (validatePssword && validateEmail) {
                 dispatch(loginStart())
@@ -121,6 +127,7 @@ export const SigninHook = () => {
                 }
             }
         } catch (err) {
+            setLoading(false)
             if (err.response && err.response.status === 400) {
                 console.log("Unauthorized: Invalid credentials")
                 alert("Invalid credentials.")
@@ -144,6 +151,7 @@ export const SigninHook = () => {
         formValues,
         hidePassword,
         error,
+        loading,
         setError,
         handleLogout,
         handleSignUp,

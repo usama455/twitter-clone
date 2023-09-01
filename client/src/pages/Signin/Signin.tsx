@@ -3,6 +3,7 @@ import React from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { SigninHook } from "./SigninHook";
+import { CircularProgress } from "@mui/material";
 
 const Signin = () => {
     const {
@@ -10,6 +11,7 @@ const Signin = () => {
         formType,
         hidePassword,
         error,
+        loading,
         setHidePassword,
         handleSignUp,
         handleLogin,
@@ -49,12 +51,18 @@ const Signin = () => {
                             <VisibilityOffIcon className="h-6 font-extralight" />
                         )}
                     </div>
-                    <button
-                        className="text-xl py-2 rounded-full px-4 bg-blue-500 text-white"
-                        onClick={(e) => handleLogin(e)}
-                    >
-                        Sign in
-                    </button>
+                    {loading ?
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <CircularProgress />
+                        </div>
+                        :
+                        <button
+                            className="text-xl py-2 rounded-full px-4 bg-blue-500 text-white"
+                            onClick={(e) => handleLogin(e)}
+                            disabled={loading}
+                        >
+                            Sign in
+                        </button>}
 
                     <p className="text-center text-xl">Don't have an account?</p>
                     <button onClick={(e) => handleFormTypeChange(e, 'signup')}>Signup</button>
@@ -91,14 +99,17 @@ const Signin = () => {
                         className="text-xl py-2 rounded-full px-4"
                     />
                     {error.password && error.password !== "" && <p className="text-red-500 text-sm mt-1">Password must be at least 5 characters long</p>
-                    }
-                    <button
-                        onClick={handleSignUp}
-                        className="text-xl py-2 rounded-full px-4 bg-blue-500 text-white"
-                        type="submit"
-                    >
-                        Sign up
-                    </button>
+                    }{loading ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <CircularProgress />
+                    </div> :
+                        <button
+                            onClick={handleSignUp}
+                            className="text-xl py-2 rounded-full px-4 bg-blue-500 text-white"
+                            type="submit"
+                            disabled={loading}
+                        >
+                            Sign up
+                        </button>}
 
 
                     <p className="text-center text-xl">Already have an account?</p>
