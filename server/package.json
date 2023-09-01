@@ -10,7 +10,8 @@
     "start": "node .",
     "dev": "nodemon -i \"*.test.js\" .",
     "build": "npm i",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "echo Deployment"
   },
   "author": "Muhammad Usama",
   "license": "ISC",
