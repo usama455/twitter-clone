@@ -23,7 +23,8 @@ export const SigninHook = () => {
         userName: "",
         password: "",
         email: "",
-        login: ""
+        login: "",
+        api: null,
     })
     const [hidePassword, setHidePassword] = useState<boolean>(true)
     const location = useLocation().pathname;
@@ -33,6 +34,13 @@ export const SigninHook = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const handleApiErrorClose = () => {
+        setError(prevErr => ({
+            ...prevErr,
+            api: null
+        }))
+    }
 
     const validatePssword = useMemo(() => {
         if (formValues.password && formValues.password.length < 5) {
@@ -105,10 +113,18 @@ export const SigninHook = () => {
             setLoading(false)
             if (err.response && err.response.status === 401) {
                 console.log("Unauthorized: Invalid credentials")
-                alert("Invalid credentials. Please check your username and password.")
+                setError(prev => ({
+                    ...prev,
+                    api: "Invalid credentials. Please check your username and password."
+                }))
+                // alert("Invalid credentials. Please check your username and password.")
             } else {
                 console.log("An error occurred:", err)
-                alert("An error occurred. Please try again later.")
+                setError(prev => ({
+                    ...prev,
+                    api: "An error occurred. Please try again later."
+                }))
+                // alert("An error occurred. Please try again later.")
                 dispatch(loginFailed())
             }
         }
@@ -130,10 +146,25 @@ export const SigninHook = () => {
             setLoading(false)
             if (err.response && err.response.status === 400) {
                 console.log("Unauthorized: Invalid credentials")
-                alert("Invalid credentials.")
+                setError(prev => ({
+                    ...prev,
+                    api: "Invalid credentials."
+                }))
+                // alert("Invalid credentials.")
+            } else if (err.response && err.response.status === 409) {
+                console.log("Email or Username already exists")
+                setError(prev => ({
+                    ...prev,
+                    api: "Email or Username already exists."
+                }))
+                // alert("Email or Username already exists.")
             } else {
                 console.log("An error occurred:", err)
-                alert("Something went wrong.")
+                setError(prev => ({
+                    ...prev,
+                    api: "Something went wrong."
+                }))
+                // alert("Something went wrong.")
                 dispatch(loginFailed())
             }
         }
@@ -153,6 +184,7 @@ export const SigninHook = () => {
         error,
         loading,
         setError,
+        handleApiErrorClose,
         handleLogout,
         handleSignUp,
         setHidePassword,

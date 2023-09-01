@@ -40,7 +40,7 @@ const LeftSidebar = () => {
       <div>
         <Link to="signin">
           <button
-            className="bg-red-500 px-4 py-2 text-white rounded-full"
+            className="bg-red-500 text-white px-4 py-2 rounded-full flex items-center justify-center"
             onClick={handleLogout}
           >
             Logout

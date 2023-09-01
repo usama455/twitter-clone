@@ -3,7 +3,7 @@ import React from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { SigninHook } from "./SigninHook";
-import { CircularProgress } from "@mui/material";
+import { Alert, CircularProgress, Snackbar } from "@mui/material";
 
 const Signin = () => {
     const {
@@ -12,6 +12,7 @@ const Signin = () => {
         hidePassword,
         error,
         loading,
+        handleApiErrorClose,
         setHidePassword,
         handleSignUp,
         handleLogin,
@@ -21,7 +22,12 @@ const Signin = () => {
     return (
         <>
             {formType === 'login' ?
-                <form className="bg-gray-200 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10 relative">
+                <form className="bg-gray-200 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10 relative"
+                    style={{
+                        marginTop: "70px",
+                        width: "35%"
+                    }}
+                >
                     <h2 className="text-3xl font-bold text-center">Sign in to Twitter</h2>
 
                     <input
@@ -65,12 +71,27 @@ const Signin = () => {
                         </button>}
 
                     <p className="text-center text-xl">Don't have an account?</p>
-                    <button onClick={(e) => handleFormTypeChange(e, 'signup')}>Signup</button>
+                    <button onClick={(e) => handleFormTypeChange(e, 'signup')}
+                        style={{
+                            border: '1px solid blue',
+                            color: 'blue',
+                            backgroundColor: 'transparent',
+                            padding: '5px 5px',
+                            cursor: 'pointer',
+                            borderRadius: '10px',
+                            outline: 'none',
+                        }}
+                    >Signup</button>
 
                 </form>
                 :
 
-                <form className="bg-gray-200 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10 relative">
+                <form className="bg-gray-200 flex flex-col py-12 px-8 rounded-lg w-8/12 md:w-6/12 mx-auto gap-10 relative"
+                    style={{
+                        marginTop: "70px",
+                        width: "35%"
+                    }}
+                >
 
                     <h2 className="text-3xl font-bold text-center">Create New Twitter Account</h2>
 
@@ -113,10 +134,25 @@ const Signin = () => {
 
 
                     <p className="text-center text-xl">Already have an account?</p>
-                    <button onClick={(e) => handleFormTypeChange(e, 'login')}>Login</button>
+                    <button onClick={(e) => handleFormTypeChange(e, 'login')}
+                        style={{
+                            border: '1px solid blue',
+                            color: 'blue',
+                            backgroundColor: 'transparent',
+                            padding: '5px 5px',
+                            cursor: 'pointer',
+                            borderRadius: '10px',
+                            outline: 'none',
+                        }}
+                    >Login</button>
                 </form>
 
             }
+            <Snackbar open={error?.api} autoHideDuration={10000} anchorOrigin={{ vertical: "top", horizontal: "right" }} onClose={handleApiErrorClose}>
+                <Alert onClose={handleApiErrorClose} severity="error" sx={{ width: '100%' }}>
+                    {error?.api}
+                </Alert>
+            </Snackbar>
         </>
 
     );

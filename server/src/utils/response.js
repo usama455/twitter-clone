@@ -30,7 +30,7 @@ export const responseError = {
   wrongPassword: "Wrong Password",
   wrongCredentials: "Wrong Credentials",
   passwordPolicyError: "Password must be between 8 and 50 characters",
-  userExists: "Another user with this email is already registered",
+  userExists: "Another user with this email or username is already registered",
   expiredPasswordToken: "Reset password token expired",
   wrongPasswordToken: "Wrong reset password token",
 };

@@ -1,0 +1,1 @@
+{level: 'error', message: 'E11000 duplicate key error collection: test.users index: userName_1 dup key: { userName: "usama" }', timestamp: '2023-09-01T19:29:14.546Z'}

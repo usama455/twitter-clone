@@ -11,8 +11,8 @@ import { sign } from "../../services/jwt";
 import jwt from "jsonwebtoken";
 
 export const checkUserExists = async (req, res, next) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
+  const { userName, email } = req.body;
+  const user = await User.findOne({ $or: [{ email }, { userName }] });
   if (user) {
     return errorResponse(
       res,
