@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "a twitter clone backend",
   "main": "src",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node .",
     "dev": "nodemon -i \"*.test.js\" .",
